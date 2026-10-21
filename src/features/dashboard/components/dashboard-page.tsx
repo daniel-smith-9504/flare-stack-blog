@@ -71,7 +71,6 @@ export function DashboardPage() {
         createLabel={createLabel}
       />
       <DashboardNotices
-        update={data.update}
         popularityAlert={data.popularityAlert}
         adminEmailNeedsSetup={data.adminEmailNeedsSetup}
         defaultSiteIdentity={data.defaultSiteIdentity}

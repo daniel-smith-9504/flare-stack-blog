@@ -6,7 +6,6 @@ import {
   CircleAlert,
   Mail,
   PenLine,
-  Sparkles,
   TriangleAlert,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -41,13 +40,12 @@ function NoticeBody({
 
 /** Things to fix or know about, each a link to where it is handled. */
 export function DashboardNotices({
-  update,
   popularityAlert,
   adminEmailNeedsSetup,
   defaultSiteIdentity,
 }: Pick<
   DashboardOverview,
-  "update" | "popularityAlert" | "adminEmailNeedsSetup" | "defaultSiteIdentity"
+  "popularityAlert" | "adminEmailNeedsSetup" | "defaultSiteIdentity"
 >) {
   const notices: Array<{ key: string; node: ReactNode }> = [];
   const callout = (key: string, node: ReactNode) => notices.push({ key, node });
@@ -115,28 +113,6 @@ export function DashboardNotices({
           description={m.admin_overview_default_site_identity_desc()}
         />
       </Link>,
-    );
-  if (update)
-    callout(
-      "update",
-      <a
-        href={update.releaseUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fuwari-callout"
-        data-tone="success"
-      >
-        <NoticeBody
-          icon={Sparkles}
-          external
-          title={m.admin_overview_update_available({
-            version: update.latestVersion,
-          })}
-          description={m.admin_overview_update_available_desc({
-            current: __APP_VERSION__,
-          })}
-        />
-      </a>,
     );
 
   if (notices.length === 0) return null;

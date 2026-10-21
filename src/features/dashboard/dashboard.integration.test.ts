@@ -17,8 +17,6 @@ import * as FriendLinkRepo from "@/features/friend-links/data/friend-links.data"
 import * as MutedUserService from "@/features/muted-users/service/muted-users.service";
 import { postPopularityService } from "@/features/post-popularity/service/post-popularity.service";
 import * as PostService from "@/features/posts/services/posts.service";
-import * as kvStore from "@/features/cache/kv-store";
-import { VERSION_CACHE_KEYS } from "@/features/version/version.schema";
 import type {
   PostPopularitySnapshot,
   PostPopularitySyncStatus,
@@ -665,41 +663,6 @@ describe("Dashboard overview", () => {
     mockPopularity(popularityStatus(), null);
     overview = await getDashboardOverview(adminContext);
     expect(overview.popularity.state).toBe("missing");
-  });
-
-  it("announces a newer release only from the cached version check", async () => {
-    const fetch = vi.spyOn(globalThis, "fetch");
-    let overview = await getDashboardOverview(adminContext);
-    expect(overview.update).toBeNull();
-
-    await kvStore.put(
-      adminContext,
-      VERSION_CACHE_KEYS.latestRelease,
-      JSON.stringify({
-        version: "v99.0.0",
-        releaseUrl:
-          "https://github.com/du2333/flare-stack-blog/releases/tag/v99.0.0",
-      }),
-    );
-    overview = await getDashboardOverview(adminContext);
-    expect(overview.update).toEqual({
-      latestVersion: "v99.0.0",
-      releaseUrl:
-        "https://github.com/du2333/flare-stack-blog/releases/tag/v99.0.0",
-    });
-
-    await kvStore.put(
-      adminContext,
-      VERSION_CACHE_KEYS.latestRelease,
-      JSON.stringify({
-        version: `v${__APP_VERSION__}`,
-        releaseUrl: `https://github.com/du2333/flare-stack-blog/releases/tag/v${__APP_VERSION__}`,
-      }),
-    );
-    overview = await getDashboardOverview(adminContext);
-    expect(overview.update).toBeNull();
-    expect(fetch).not.toHaveBeenCalled();
-    await kvStore.remove(adminContext, VERSION_CACHE_KEYS.latestRelease);
   });
 
   it("surfaces a failed popularity sync", async () => {

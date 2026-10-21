@@ -1086,32 +1086,6 @@
       }
     }
   },
-  "version": {
-    "check": {
-      "~orpc": {
-        "errorMap": {},
-        "meta": {},
-        "route": {
-          "method": "GET",
-          "path": "/admin/version",
-          "summary": "Check for application updates",
-          "tags": ["Admin Version"]
-        }
-      }
-    },
-    "forceCheck": {
-      "~orpc": {
-        "errorMap": {},
-        "meta": {},
-        "route": {
-          "method": "POST",
-          "path": "/admin/version/check",
-          "summary": "Force-check for application updates",
-          "tags": ["Admin Version"]
-        }
-      }
-    }
-  },
   "webhooks": {
     "test": {
       "~orpc": {

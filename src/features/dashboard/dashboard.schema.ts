@@ -68,17 +68,10 @@ const DashboardWritingHourSchema = z.object({
   count: z.number().int().positive(),
 });
 
-const DashboardUpdateSchema = z.object({
-  latestVersion: z.string(),
-  releaseUrl: z.url(),
-});
-
 export const DashboardOverviewSchema = z.object({
   popularityAlert: z.enum(["failed", "expired"]).nullable(),
   adminEmailNeedsSetup: z.boolean(),
   defaultSiteIdentity: z.boolean(),
-  /** A newer stable release, known only from the version check's cache. */
-  update: DashboardUpdateSchema.nullable(),
   stats: DashboardStatsSchema,
   popularity: DashboardPopularitySchema,
   /**
