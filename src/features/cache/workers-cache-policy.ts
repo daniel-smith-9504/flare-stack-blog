@@ -86,9 +86,6 @@ export function workersCachePolicy(pathname: string): WorkersCachePolicy {
   if (SITE_DOCUMENTS_HTML_ONLY.has(path)) {
     return { cache: "public", tags: [HTML_TAG] };
   }
-  if (path === "/stats.js") {
-    return { cache: "public", tags: [] };
-  }
   if (path.startsWith("/images/")) {
     return { cache: "public", tags: [] };
   }

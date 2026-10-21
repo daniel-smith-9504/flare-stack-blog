@@ -22,7 +22,7 @@ const sync = adminProcedure
   .route({
     method: "POST",
     path: "/admin/post-popularity/sync",
-    summary: "Sync post popularity from Umami",
+    summary: "Sync post popularity from Cloudflare page views",
     tags: ["Admin Post Popularity"],
   })
   .output(PostPopularitySyncStatusSchema)

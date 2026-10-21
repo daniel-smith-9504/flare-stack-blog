@@ -1,4 +1,18 @@
 {
+  "analytics": {
+    "overview": {
+      "~orpc": {
+        "errorMap": {},
+        "meta": {},
+        "route": {
+          "method": "GET",
+          "path": "/admin/analytics",
+          "summary": "Get first-party traffic analytics",
+          "tags": ["Admin Analytics"]
+        }
+      }
+    }
+  },
   "posts": {
     "list": {
       "~orpc": {
@@ -1039,7 +1053,7 @@
         "route": {
           "method": "POST",
           "path": "/admin/post-popularity/sync",
-          "summary": "Sync post popularity from Umami",
+          "summary": "Sync post popularity from Cloudflare page views",
           "tags": ["Admin Post Popularity"]
         }
       }

@@ -17,7 +17,6 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SiteDotwebmanifestRouteImport } from './routes/site[.]webmanifest'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as StatsDotjsRouteImport } from './routes/stats[.]js'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicSplatRouteImport } from './routes/_public/$'
 import { Route as PublicAuthRouteRouteImport } from './routes/_public/_auth/route'
@@ -28,11 +27,12 @@ import { Route as PublicSearchRouteImport } from './routes/_public/search'
 import { Route as PublicUnsubscribeRouteImport } from './routes/_public/unsubscribe'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AdminSplatRouteImport } from './routes/admin/$'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin/analytics'
 import { Route as AdminPostsRouteRouteImport } from './routes/admin/posts/route'
 import { Route as AdminSettingsRouteRouteImport } from './routes/admin/settings/route'
 import { Route as ApiSplatRouteImport } from './routes/api.$'
+import { Route as ApiAnalyticsRouteImport } from './routes/api.analytics'
 import { Route as ApiAuthRouteImport } from './routes/api.auth'
-import { Route as ApiSendRouteImport } from './routes/api.send'
 import { Route as ImagesSplatRouteImport } from './routes/images.$'
 import { Route as PublicAuthForgotPasswordRouteImport } from './routes/_public/_auth/forgot-password'
 import { Route as PublicAuthLoginRouteImport } from './routes/_public/_auth/login'
@@ -96,11 +96,6 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StatsDotjsRoute = StatsDotjsRouteImport.update({
-  id: '/stats.js',
-  path: '/stats.js',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -149,6 +144,11 @@ const AdminSplatRoute = AdminSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminPostsRouteRoute = AdminPostsRouteRouteImport.update({
   id: '/posts',
   path: '/posts',
@@ -164,14 +164,14 @@ const ApiSplatRoute = ApiSplatRouteImport.update({
   path: '/api/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAnalyticsRoute = ApiAnalyticsRouteImport.update({
+  id: '/api/analytics',
+  path: '/api/analytics',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthRoute = ApiAuthRouteImport.update({
   id: '/api/auth',
   path: '/api/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiSendRoute = ApiSendRouteImport.update({
-  id: '/api/send',
-  path: '/api/send',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ImagesSplatRoute = ImagesSplatRouteImport.update({
@@ -304,7 +304,6 @@ export interface FileRoutesByFullPath {
   '/rss.xml': typeof RssDotxmlRoute
   '/site.webmanifest': typeof SiteDotwebmanifestRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stats.js': typeof StatsDotjsRoute
   '/admin/posts': typeof AdminPostsRouteRouteWithChildren
   '/admin/settings': typeof AdminSettingsRouteRouteWithChildren
   '/$': typeof PublicSplatRoute
@@ -313,9 +312,10 @@ export interface FileRoutesByFullPath {
   '/search': typeof PublicSearchRoute
   '/unsubscribe': typeof PublicUnsubscribeRoute
   '/admin/$': typeof AdminSplatRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/api/$': typeof ApiSplatRoute
+  '/api/analytics': typeof ApiAnalyticsRoute
   '/api/auth': typeof ApiAuthRouteWithChildren
-  '/api/send': typeof ApiSendRoute
   '/images/$': typeof ImagesSplatRoute
   '/admin/': typeof AdminIndexRoute
   '/forgot-password': typeof PublicAuthForgotPasswordRoute
@@ -348,7 +348,6 @@ export interface FileRoutesByTo {
   '/rss.xml': typeof RssDotxmlRoute
   '/site.webmanifest': typeof SiteDotwebmanifestRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stats.js': typeof StatsDotjsRoute
   '/': typeof PublicIndexRoute
   '/$': typeof PublicSplatRoute
   '/friend-links': typeof PublicFriendLinksRoute
@@ -356,9 +355,10 @@ export interface FileRoutesByTo {
   '/search': typeof PublicSearchRoute
   '/unsubscribe': typeof PublicUnsubscribeRoute
   '/admin/$': typeof AdminSplatRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/api/$': typeof ApiSplatRoute
+  '/api/analytics': typeof ApiAnalyticsRoute
   '/api/auth': typeof ApiAuthRouteWithChildren
-  '/api/send': typeof ApiSendRoute
   '/images/$': typeof ImagesSplatRoute
   '/admin': typeof AdminIndexRoute
   '/forgot-password': typeof PublicAuthForgotPasswordRoute
@@ -393,7 +393,6 @@ export interface FileRoutesById {
   '/rss.xml': typeof RssDotxmlRoute
   '/site.webmanifest': typeof SiteDotwebmanifestRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/stats.js': typeof StatsDotjsRoute
   '/_public/_auth': typeof PublicAuthRouteRouteWithChildren
   '/_public/_user': typeof PublicUserRouteRouteWithChildren
   '/admin/posts': typeof AdminPostsRouteRouteWithChildren
@@ -404,9 +403,10 @@ export interface FileRoutesById {
   '/_public/search': typeof PublicSearchRoute
   '/_public/unsubscribe': typeof PublicUnsubscribeRoute
   '/admin/$': typeof AdminSplatRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/api/$': typeof ApiSplatRoute
+  '/api/analytics': typeof ApiAnalyticsRoute
   '/api/auth': typeof ApiAuthRouteWithChildren
-  '/api/send': typeof ApiSendRoute
   '/images/$': typeof ImagesSplatRoute
   '/_public/': typeof PublicIndexRoute
   '/admin/': typeof AdminIndexRoute
@@ -444,7 +444,6 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/site.webmanifest'
     | '/sitemap.xml'
-    | '/stats.js'
     | '/admin/posts'
     | '/admin/settings'
     | '/$'
@@ -453,9 +452,10 @@ export interface FileRouteTypes {
     | '/search'
     | '/unsubscribe'
     | '/admin/$'
+    | '/admin/analytics'
     | '/api/$'
+    | '/api/analytics'
     | '/api/auth'
-    | '/api/send'
     | '/images/$'
     | '/admin/'
     | '/forgot-password'
@@ -488,7 +488,6 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/site.webmanifest'
     | '/sitemap.xml'
-    | '/stats.js'
     | '/'
     | '/$'
     | '/friend-links'
@@ -496,9 +495,10 @@ export interface FileRouteTypes {
     | '/search'
     | '/unsubscribe'
     | '/admin/$'
+    | '/admin/analytics'
     | '/api/$'
+    | '/api/analytics'
     | '/api/auth'
-    | '/api/send'
     | '/images/$'
     | '/admin'
     | '/forgot-password'
@@ -532,7 +532,6 @@ export interface FileRouteTypes {
     | '/rss.xml'
     | '/site.webmanifest'
     | '/sitemap.xml'
-    | '/stats.js'
     | '/_public/_auth'
     | '/_public/_user'
     | '/admin/posts'
@@ -543,9 +542,10 @@ export interface FileRouteTypes {
     | '/_public/search'
     | '/_public/unsubscribe'
     | '/admin/$'
+    | '/admin/analytics'
     | '/api/$'
+    | '/api/analytics'
     | '/api/auth'
-    | '/api/send'
     | '/images/$'
     | '/_public/'
     | '/admin/'
@@ -582,10 +582,9 @@ export interface RootRouteChildren {
   RssDotxmlRoute: typeof RssDotxmlRoute
   SiteDotwebmanifestRoute: typeof SiteDotwebmanifestRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  StatsDotjsRoute: typeof StatsDotjsRoute
   ApiSplatRoute: typeof ApiSplatRoute
+  ApiAnalyticsRoute: typeof ApiAnalyticsRoute
   ApiAuthRoute: typeof ApiAuthRouteWithChildren
-  ApiSendRoute: typeof ApiSendRoute
   ImagesSplatRoute: typeof ImagesSplatRoute
 }
 
@@ -645,13 +644,6 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/stats.js': {
-      id: '/stats.js'
-      path: '/stats.js'
-      fullPath: '/stats.js'
-      preLoaderRoute: typeof StatsDotjsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public/': {
@@ -724,6 +716,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSplatRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/admin/posts': {
       id: '/admin/posts'
       path: '/posts'
@@ -745,18 +744,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/analytics': {
+      id: '/api/analytics'
+      path: '/api/analytics'
+      fullPath: '/api/analytics'
+      preLoaderRoute: typeof ApiAnalyticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth': {
       id: '/api/auth'
       path: '/api/auth'
       fullPath: '/api/auth'
       preLoaderRoute: typeof ApiAuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/send': {
-      id: '/api/send'
-      path: '/api/send'
-      fullPath: '/api/send'
-      preLoaderRoute: typeof ApiSendRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/images/$': {
@@ -1042,6 +1041,7 @@ interface AdminRouteRouteChildren {
   AdminPostsRouteRoute: typeof AdminPostsRouteRouteWithChildren
   AdminSettingsRouteRoute: typeof AdminSettingsRouteRouteWithChildren
   AdminSplatRoute: typeof AdminSplatRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminFriendLinksIndexRoute: typeof AdminFriendLinksIndexRoute
   AdminMediaIndexRoute: typeof AdminMediaIndexRoute
@@ -1051,6 +1051,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminPostsRouteRoute: AdminPostsRouteRouteWithChildren,
   AdminSettingsRouteRoute: AdminSettingsRouteRouteWithChildren,
   AdminSplatRoute: AdminSplatRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminFriendLinksIndexRoute: AdminFriendLinksIndexRoute,
   AdminMediaIndexRoute: AdminMediaIndexRoute,
@@ -1080,10 +1081,9 @@ const rootRouteChildren: RootRouteChildren = {
   RssDotxmlRoute: RssDotxmlRoute,
   SiteDotwebmanifestRoute: SiteDotwebmanifestRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  StatsDotjsRoute: StatsDotjsRoute,
   ApiSplatRoute: ApiSplatRoute,
+  ApiAnalyticsRoute: ApiAnalyticsRoute,
   ApiAuthRoute: ApiAuthRouteWithChildren,
-  ApiSendRoute: ApiSendRoute,
   ImagesSplatRoute: ImagesSplatRoute,
 }
 export const routeTree = rootRouteImport

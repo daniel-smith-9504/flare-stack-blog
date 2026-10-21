@@ -1,3 +1,4 @@
+export * from "./analytics.table";
 export * from "./auth.table";
 export * from "./comments.table";
 export * from "./config.table";

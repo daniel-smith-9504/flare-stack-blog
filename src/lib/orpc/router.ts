@@ -3,6 +3,7 @@ import "@/features/friend-links/friend-links.cache";
 import "@/features/posts/posts.cache";
 import "@/features/categories/categories.cache";
 import "@/features/tags/tags.cache";
+import analyticsRouter from "@/features/analytics/server/router";
 import cacheRouter from "@/features/cache/server/router";
 import categoriesRouter from "@/features/categories/server/router";
 import commentsRouter from "@/features/comments/server/router";
@@ -19,6 +20,7 @@ import tagsRouter from "@/features/tags/server/router";
 import webhookRouter from "@/features/webhook/server/router";
 
 export const router = {
+  analytics: analyticsRouter,
   posts: postsRouter,
   tags: tagsRouter,
   categories: categoriesRouter,

@@ -1,0 +1,162 @@
+/*
+ * Traffic analytics: the same editorial Admin language as the dashboard.
+ * Type and hairline rules, with the numbers carrying the emphasis.
+ */
+.analytics-workspace {
+  --analytics-gap: calc(28 * var(--admin-unit));
+  container: analytics / inline-size;
+  display: flex;
+  flex-direction: column;
+  gap: var(--analytics-gap);
+  min-width: 0;
+  padding: calc(26 * var(--admin-unit)) calc(26 * var(--admin-unit))
+    calc(40 * var(--admin-unit));
+  color: var(--fuwari-fg);
+}
+
+.analytics-workspace .fuwari-page-header {
+  margin: 0;
+}
+
+.analytics-ranges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(8 * var(--admin-unit));
+}
+
+/* The whole page scrolls inside the Admin content region. */
+.admin-list-region:has(.analytics-workspace) {
+  display: block;
+  overflow-y: auto;
+}
+.admin-list-region:has(.analytics-workspace) > div,
+.admin-list-region:has(.analytics-workspace) .fuwari-page-fade,
+.admin-list-region:has(.analytics-workspace) .fuwari-page-fade > div {
+  display: block;
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+.analytics-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--admin-rule);
+}
+
+.analytics-summary li {
+  display: flex;
+  flex-direction: column;
+  gap: calc(8 * var(--admin-unit));
+  padding-block: calc(18 * var(--admin-unit));
+}
+
+.analytics-summary li + li {
+  border-inline-start: 1px solid var(--admin-rule);
+  padding-inline-start: calc(22 * var(--admin-unit));
+}
+
+.analytics-summary-label {
+  display: flex;
+  align-items: center;
+  gap: calc(7 * var(--admin-unit));
+  color: var(--fuwari-fg-50);
+  font-size: calc(12 * var(--admin-unit));
+  letter-spacing: 0.01em;
+}
+
+.analytics-summary strong {
+  color: var(--fuwari-fg);
+  font-size: calc(30 * var(--admin-unit));
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(30 * var(--admin-unit)) calc(36 * var(--admin-unit));
+}
+
+.analytics-card {
+  min-width: 0;
+  border-top: 1px solid var(--admin-rule);
+  padding-top: calc(16 * var(--admin-unit));
+}
+
+.analytics-card-wide {
+  grid-column: 1 / -1;
+}
+
+.analytics-recent {
+  border-top: 1px solid var(--admin-rule);
+  padding-top: calc(16 * var(--admin-unit));
+}
+
+.analytics-table-wrap {
+  overflow-x: auto;
+}
+
+.analytics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: calc(13 * var(--admin-unit));
+  text-align: left;
+}
+
+.analytics-table th {
+  padding: calc(10 * var(--admin-unit)) calc(14 * var(--admin-unit))
+    calc(8 * var(--admin-unit)) 0;
+  border-bottom: 1px solid var(--admin-rule);
+  color: var(--fuwari-fg-50);
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.analytics-table td {
+  padding: calc(11 * var(--admin-unit)) calc(14 * var(--admin-unit))
+    calc(11 * var(--admin-unit)) 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--fuwari-fg) 8%, transparent);
+  color: var(--fuwari-fg-75);
+  vertical-align: top;
+  white-space: nowrap;
+}
+
+.analytics-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.analytics-path,
+.analytics-ip {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: calc(12 * var(--admin-unit));
+}
+
+.analytics-ip {
+  color: var(--fuwari-fg-50);
+}
+
+@container analytics (max-width: 760px) {
+  .analytics-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .analytics-card-wide {
+    grid-column: auto;
+  }
+}
+
+@container analytics (max-width: 560px) {
+  .analytics-summary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .analytics-summary li + li {
+    border-inline-start: 0;
+    border-top: 1px solid var(--admin-rule);
+    padding-inline-start: 0;
+  }
+}

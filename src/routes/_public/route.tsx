@@ -7,10 +7,10 @@ import {
 import { useEffect } from "react";
 import { PublicLayout as SitePublicLayout } from "@/components/layout/public-layout";
 import { Toaster } from "@/components/layout/toaster";
+import { PageViewTracker } from "@/features/analytics/components/page-view-tracker";
 import { useLogout } from "@/features/auth/hooks/use-logout";
 import { authClient } from "@/lib/auth/auth-client";
 import { CACHE_CONTROL } from "@/lib/constants";
-import { clientEnv } from "@/lib/env/client.env";
 import { isExternalNavHref } from "@/features/config/utils/nav-links";
 import { m } from "@/paraglide/messages";
 
@@ -18,20 +18,6 @@ export const Route = createFileRoute("/_public")({
   component: PublicLayout,
   headers: () => {
     return CACHE_CONTROL.public;
-  },
-  head: () => {
-    const env = clientEnv();
-    return {
-      scripts: env.VITE_UMAMI_WEBSITE_ID
-        ? [
-            {
-              src: "/stats.js",
-              defer: true,
-              "data-website-id": env.VITE_UMAMI_WEBSITE_ID,
-            },
-          ]
-        : [],
-    };
   },
 });
 
@@ -82,6 +68,7 @@ function PublicLayout() {
       >
         <Outlet />
       </SitePublicLayout>
+      <PageViewTracker />
       <Toaster />
     </>
   );

@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouteContext } from "@tanstack/react-router";
 import {
   ArrowUpRight,
+  BarChart3,
   FileText,
   Home,
   Image as ImageIcon,
@@ -92,6 +93,12 @@ export function SideBar({
       path: "/admin/posts",
       icon: FileText,
       label: m.admin_sidebar_posts(),
+      exact: false,
+    },
+    {
+      path: "/admin/analytics",
+      icon: BarChart3,
+      label: m.admin_sidebar_analytics(),
       exact: false,
     },
     {
